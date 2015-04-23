@@ -2,6 +2,10 @@ var ignore = false;
 var theme = "neo";
 var delay = 0;
 
+/**
+* SET UP THE <select> TO CHOOSE THEMES
+**/
+
 var select_html = "";
 for(var i = 0; i < default_themes.length; i++){
   var opt = "<option value=\"" + default_themes[i] + "\">" + default_themes[i] + "</option>";
@@ -9,14 +13,21 @@ for(var i = 0; i < default_themes.length; i++){
 }
 $("#defaults").html(select_html);
 $("#defaults").val("neo"); //default
-
 $("#defaults").change(function(){
   setDefaults($("#defaults").val());
 });
 
+/**
+* SET UP THE <select> TO CHOOSE LANGUAGES
+**/
+
 $("#lang").change(function(){
   setLang($("#lang option[value='"+$("#lang").val()+"']").text(), $("#lang").val());
 });
+
+/**
+* SET UP THE EDITOR
+**/
 
 var editor = CodeMirror(document.getElementById("container"),{
     lineNumbers: true,
@@ -26,20 +37,20 @@ var editor = CodeMirror(document.getElementById("container"),{
     indentUnit: 4,
     indentWithTabs: true
 });
-editor.refresh();
+editor.refresh(); //adjust to fit <div>
 editor.on("change",function(cm,change){
-    window.setTimeout(function(){
-      for(var i = 0; i < values.length; i++){
+    window.setTimeout(function(){ //in order for this to take effect, must first wait for CodeMirror to do its thing
+      for(var i = 0; i < values.length; i++){ //otherwise, changes will be overridden by CodeMirror
         $(values[i].name.split(":")[0].replace("?",theme)).css(values[i].name.split(":")[1], values[i].val);
       }
-    }, delay);
+    }, delay); //even a 0 delay is fine
 });
 
 function setDefaults(theme_name){
   theme = theme_name;
   ignore = true; //when you set the defaults, don't trigger anything
 
-  values = [];
+  values = []; //reset all custom values
   var current_theme = editor.getOption("theme");
   $("#hidden").removeClass("cm-s-" + current_theme);
   $("#hidden").addClass("cm-s-" + theme_name);
@@ -76,7 +87,7 @@ function setDefaults(theme_name){
     }
   }
 
-  ignore = false;
+  ignore = false; //ok, all good
 }
 
 function setLang(name, mime){
@@ -84,7 +95,7 @@ function setLang(name, mime){
   editor.setValue(intro[name]);
 }
 
-var values = [];
+var values = []; //custom values
 
 var html = "";
 for(var i = 0; i < params.length; i++){
@@ -164,6 +175,7 @@ setLang("javascript","javascript");
 setDefaults("neo");
 
 function download(){
+  //woop! time to export!
   var export_theme = $("#name").val();
   var ok = true;
   for(var i = 0; i < not_allowed.length; i++){
