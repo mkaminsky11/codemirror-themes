@@ -1,0 +1,69 @@
+body, html, .CodeMirror{
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+#container{
+  width: 80%;
+  height: calc(100% - 50px);
+  position: absolute;
+  top: 50px;
+  left: 0;
+  display: block;
+}
+
+#topbar{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(100% - 20px);
+  padding: 10px;
+  height: 29px;
+  border-bottom: solid 1px #eee;
+  z-index: 1;
+}
+#topbar > * {
+  display: inline-block;
+}
+
+#sidebar{
+  position: absolute;
+  width: calc(20% - 1px);
+  padding: 0px;
+  right: 0;
+  top: 0;
+  height: 100%;
+  padding-top: 0;
+  padding-bottom: 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border-left: solid 1px #eee;
+  z-index: 2;
+  background-color: white;
+}
+
+#sidebar > div > *{
+  display: block;
+}
+
+#sidebar > div{
+  padding: 10px;
+  border-bottom: solid 1px #eee;
+}
+
+#topbar, #sidebar{
+  font-family: "Arial";
+}
+
+#topbar p, #sidebar p{
+  font-size: 15px;
+}
+
+small{
+  font-size: 13px;
+}
+
+#hidden{
+  display: none !important;
+}
